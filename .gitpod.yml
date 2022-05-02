@@ -3,9 +3,9 @@ image:
 
 tasks:
   - name: start cpu stress
-    command: stress-ng --cpu 3 --backoff 10000000 --timeout 600s 
+    command: stress-ng --cpu ${CPU_COUNT:-3} --backoff ${CPU_BACKOFF:-10000000} --timeout ${CPU_TIMEOUT:-600s} 
   - name: start io stress
-    command: fio --name io-stress --eta-newline=5s --filename=/workspace/gitpod.temp --rw=randrw --size=2g --io_size=50g --blocksize=8k --ioengine=libaio --fsync=1000 --iodepth=10 --direct=1 --numjobs=20 --runtime=600
+    command: fio --name io-stress --eta-newline=5s --filename=/workspace/gitpod.temp --rw=randrw --size=${IO_FILE_SIZE:-2g} --io_size=${IO_TOTAL:-50g} --blocksize=${IO_BLOCKSIZE:-8k} --ioengine=libaio --fsync=1000 --iodepth=10 --direct=1 --numjobs=20 --runtime=${IO_TIMEOUT:-600}
   - name: start memory stress
-    command: stress-ng --vm 1 --vm-keep --vm-bytes 6G
+    command: stress-ng --vm 1 --vm-keep --vm-bytes ${MEMORY_BYTES:-6G}
 
